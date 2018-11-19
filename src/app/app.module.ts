@@ -1,16 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { HelloComponent } from './hello/hello.component';
+import { ProductComponent } from './product/product.component';
+import {AppComponent} from './app.component';
+import { NaglowekComponent } from './naglowek/naglowek.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HelloComponent,
+    ProductComponent,
+    NaglowekComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ProductComponent]
 })
 export class AppModule { }

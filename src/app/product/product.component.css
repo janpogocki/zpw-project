@@ -1,0 +1,40 @@
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.product-image {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 100%;
+}
+
+.product-table {
+  border-collapse: collapse;
+}
+
+.product-table-top {
+  font-weight: bold;
+  background-color: lightgray;
+  text-align: center;
+}
+
+.product-table-low-quantity {
+  color: orange;
+}
+
+.product-table-lowest-price {
+  border: 1px solid red;
+}
+
+.product-table-highest-price {
+  border: 1px solid green;
+}
+
+.product-sum {
+  width: fit-content;
+  margin-top: 10px;
+  padding: 5px;
+  color: white;
+  background-color: green;
+}

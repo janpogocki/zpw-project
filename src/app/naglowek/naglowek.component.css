@@ -1,0 +1,14 @@
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: fit-content;
+}
+
+.header-cell {
+  vertical-align: middle;
+}
+
+.logo-header {
+  max-width: 150px;
+  max-height: 150px;
+}
