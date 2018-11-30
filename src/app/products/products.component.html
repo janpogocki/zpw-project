@@ -1,0 +1,19 @@
+<h1>Produkty</h1>
+
+<table class="product-table">
+  <tr class="product-table-top">
+    <td>Obrazek</td>
+    <td>Nazwa</td>
+    <td>Cena</td>
+    <td>Dostępna ilość</td>
+    <td>Opis</td>
+    <td>Opcje koszyka</td>
+  </tr>
+
+<app-product *ngFor="let product of products" [product]="product" [products]="this"></app-product>
+
+</table>
+
+<div class="product-sum" [style.background-color]="getSumOfAvailableProducts() > 10 ? 'green' : 'red'">
+  Suma dostępnych produktów: <b>{{ getSumOfAvailableProducts() }}</b>
+</div>

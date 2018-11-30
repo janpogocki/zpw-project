@@ -3,5 +3,5 @@ export class Product {
   quantity: number;
   price: number;
   description: string;
-  photoURI: string;
+  photo: string;
 }

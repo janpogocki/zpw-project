@@ -1,32 +1,14 @@
-<app-naglowek></app-naglowek>
-
-<h1>Produkty</h1>
-
-<table class="product-table">
-  <tr class="product-table-top">
-    <td>Obrazek</td>
-    <td>Nazwa</td>
-    <td>Cena</td>
-    <td>Dostępna ilość</td>
-    <td>Opis</td>
-    <td>Opcje koszyka</td>
-  </tr>
-  <tr *ngFor="let product of products" [ngStyle]="lowestAndHighestPriceStyles[products.indexOf(product)]">
-    <td><img class="product-image" src="/assets/img/products/{{product.photoURI}}" /></td>
-    <td>{{product.name | uppercase}}</td>
-    <td>{{product.price.toFixed(2)}} zł</td>
-    <td [ngStyle]="lowQuantityStyles[products.indexOf(product)]">{{product.quantity}}</td>
-    <td>{{product.description}}</td>
-    <td>
-      {{ chart[products.indexOf(product)] }}
-      &nbsp;
-      <button (click)="updateChart(product, 1)" [style.display]="isVisible(product, 1) ? 'inline' : 'none'">+</button>
-      &nbsp;
-      <button (click)="updateChart(product, -1)" [style.display]="isVisible(product, -1) ? 'inline' : 'none'">-</button>
-    </td>
-  </tr>
-</table>
-
-<div class="product-sum" [style.background-color]="getSumOfAvailableProducts() > 10 ? 'green' : 'red'">
-  Suma dostępnych produktów: <b>{{ getSumOfAvailableProducts() }}</b>
-</div>
+<tr [ngStyle]="products.lowestAndHighestPriceStyles[products.products.indexOf(product)]">
+  <td><img class="product-image" src="/assets/img/products/{{product.photo}}" /></td>
+  <td>{{product.name | uppercase}}</td>
+  <td>{{product.price.toFixed(2)}} zł</td>
+  <td [ngStyle]="products.lowQuantityStyles[products.products.indexOf(product)]">{{product.quantity}}</td>
+  <td>{{product.description}}</td>
+  <td>
+    {{ products.chart[products.products.indexOf(product)] }}
+    &nbsp;
+    <button mat-button (click)="products.updateChart(product, 1)" [style.display]="products.isVisible(product, 1) ? 'inline' : 'none'">+</button>
+    &nbsp;
+    <button mat-button (click)="products.updateChart(product, -1)" [style.display]="products.isVisible(product, -1) ? 'inline' : 'none'">-</button>
+  </td>
+</tr>

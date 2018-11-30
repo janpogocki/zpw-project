@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './naglowek.component.html',
   styleUrls: ['./naglowek.component.css']
 })
-export class NaglowekComponent implements OnInit {
+export class NaglowekComponent {
 
   constructor() { }
 
-  ngOnInit() {
-  }
 
 }

@@ -1,14 +1,18 @@
-<div class="header-grid">
-  <div class="header-cell">
-    <img class="logo-header" src="/assets/img/header/logo.png" />
-  </div>
+<mat-toolbar class="mat-elevation-z3" color="primary">
+  <button mat-button>
+    <mat-icon>shop</mat-icon>
+    SklepSportowy.pl
+  </button>
 
-  <div class="header-cell">
-    Firma Świeżak s.c.
-    <br>ul. Polna 24
-    <br>30-074 Kraków
+  <span class="fill-space"></span>
 
-    <br><br>
-    <strong>Witamy na naszej stronie!</strong>
-  </div>
-</div>
+  <button mat-button>
+    <mat-icon>shopping_basket</mat-icon>
+    0,00 zł - 0 produktów
+  </button>
+</mat-toolbar>
+
+<div class="mat-toolbar-single-row"></div>
+
+<app-products></app-products>
+
