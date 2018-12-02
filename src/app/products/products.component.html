@@ -1,3 +1,69 @@
+<div>
+  <mat-card>
+    <form autocomplete="off">
+      <mat-form-field floatLabel="never">
+        <mat-label matPrefix><mat-icon>search</mat-icon></mat-label>
+        <mat-label class="search-input">Wyszukaj w całym sklepie...</mat-label>
+        <label>
+          <input matInput type="text" class="search-input" />
+        </label>
+      </mat-form-field>
+    </form>
+  </mat-card>
+</div>
+
+
+<div class="columns-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutGap="2rem" fxLayoutAlign="center">
+  <div fxFlex="25%">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Zakres cenowy
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        TODO zakres
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Kategorie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        TODO kategorie
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Sortowanie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        TODO sortowanie
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <!------------------------->
+
+  <div fxFlex="75%">
+    <mat-grid-list cols="4" rowHeight="1:1.5">
+      <mat-grid-tile *ngFor="let product of products">
+        <mat-card class="mat-card-item">
+          <app-product [product]="product"></app-product>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+
+
+<!--
+
 <h1>Produkty</h1>
 
 <table class="product-table">
@@ -17,3 +83,4 @@
 <div class="product-sum" [style.background-color]="getSumOfAvailableProducts() > 10 ? 'green' : 'red'">
   Suma dostępnych produktów: <b>{{ getSumOfAvailableProducts() }}</b>
 </div>
+-->

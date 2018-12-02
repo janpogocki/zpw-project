@@ -1,0 +1,11 @@
+.quantity-input {
+  max-width: 4rem;
+}
+
+.quantity-input input {
+  text-align: center;
+}
+
+.button-cart {
+  margin-left: 2rem;
+}

@@ -22,3 +22,9 @@ mat-toolbar {
 .fill-space {
   flex: 1 1 auto;
 }
+
+.app-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 2rem;
+}

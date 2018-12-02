@@ -1,3 +1,4 @@
+<!--
 <tr [ngStyle]="products.lowestAndHighestPriceStyles[products.products.indexOf(product)]">
   <td><img class="product-image" src="/assets/img/products/{{product.photo}}" /></td>
   <td>{{product.name | uppercase}}</td>
@@ -12,3 +13,16 @@
     <button mat-button (click)="products.updateChart(product, -1)" [style.display]="products.isVisible(product, -1) ? 'inline' : 'none'">-</button>
   </td>
 </tr>
+-->
+
+<div class="container-product" fxLayout="column">
+  <div routerLink="/product/details/{{product.id}}" class="container-product-item"><strong>{{product.name}}</strong></div>
+  <div routerLink="/product/details/{{product.id}}" class="container-product-item-img"><img class="product-image" src="{{photoUrl}}" /></div>
+  <div routerLink="/product/details/{{product.id}}" class="container-product-item" *ngIf="false"><span class="item-discount">Promocja -25%</span></div>
+  <div class="container-product-item">
+    <button mat-raised-button color="primary" matBadge="{{product.quantity}}" matBadgeColor="accent" matBadgePosition="before" (click)="addToChart()">
+      <mat-icon>shopping_cart</mat-icon>
+      {{product.price.toFixed(2)}} zł
+    </button>
+  </div>
+</div>

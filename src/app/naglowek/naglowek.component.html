@@ -1,18 +1,19 @@
 <mat-toolbar class="mat-elevation-z3" color="primary">
-  <button mat-button>
+  <button mat-button routerLink="/">
     <mat-icon>shop</mat-icon>
     SklepSportowy.pl
   </button>
 
   <span class="fill-space"></span>
 
-  <button mat-button>
-    <mat-icon>shopping_basket</mat-icon>
-    0,00 zł - 0 produktów
+  <button mat-button routerLink="/cart">
+    <mat-icon matBadge="0" matBadgePosition="before above" matBadgeColor="accent">shopping_basket</mat-icon>
+    0.00 zł
   </button>
 </mat-toolbar>
 
 <div class="mat-toolbar-single-row"></div>
 
-<app-products></app-products>
-
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>

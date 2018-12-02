@@ -1,0 +1,30 @@
+<div class="columns-container" fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap fxLayoutGap="2rem" fxLayoutAlign="center">
+  <div fxFlex="40%">
+    <mat-card>
+      <img src="xd/{{product.photo}}" />
+    </mat-card>
+  </div>
+
+  <div fxFlex="60%">
+    <mat-card>
+      <h1>{{product.name}}</h1>
+      <br>
+      {{product.description}}
+      <br><br>
+      <h2>{{product.price}} zł</h2>
+      <br><br>
+
+      <form>
+        <mat-form-field class="quantity-input">
+          <input matInput type="number" value="1" min="1" max="{{product.quantity}}">
+        </mat-form-field>
+        z {{product.quantity}}
+        <button mat-raised-button color="primary" class="button-cart">
+          <mat-icon>shopping_cart</mat-icon>
+          Dodaj do koszyka
+        </button>
+      </form>
+
+    </mat-card>
+  </div>
+</div>
