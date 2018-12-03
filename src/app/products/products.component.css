@@ -57,3 +57,8 @@ mat-form-field {
   height: calc(100% - 70px);
   align-self: start;
 }
+
+.paginator {
+  display: flex;
+  justify-content: flex-end;
+}

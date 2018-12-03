@@ -1,8 +1,9 @@
-import {Component, Inject, Input, OnInit, Output} from '@angular/core';
-import {ProductsComponent} from '../products/products.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {Product} from './product';
-import {MatDialog} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {ProductsProviderService} from '../products-provider.service';
+import {CartService} from '../cart.service';
+import {CartUtils} from '../utils/cart-utils';
 
 @Component({
   selector: 'app-product',
@@ -12,19 +13,17 @@ import {ProductsProviderService} from '../products-provider.service';
 export class ProductComponent implements OnInit {
 
   @Input() product: Product;
-  photoUrl: string;
 
-  constructor(private productsProvider: ProductsProviderService) {
+  constructor(private productsProvider: ProductsProviderService,
+              private cartService: CartService,
+              public snackbar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.productsProvider.getProductPhotoFullUrl(this.product)
-      .subscribe(url => this.photoUrl = url);
   }
 
   addToChart() {
-    console.log('added to chart');
-
+    CartUtils.addToCart(this.product, 1, this.cartService, this.snackbar);
   }
 
 }

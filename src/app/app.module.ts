@@ -1,29 +1,37 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { HelloComponent } from './hello/hello.component';
-import { ProductsComponent } from './products/products.component';
+import {HelloComponent} from './hello/hello.component';
+import {ProductsComponent} from './products/products.component';
 import {AppComponent} from './app.component';
-import { NaglowekComponent } from './naglowek/naglowek.component';
-import { ProductComponent } from './product/product.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NaglowekComponent} from './naglowek/naglowek.component';
+import {ProductComponent} from './product/product.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatBadgeModule,
   MatButtonModule,
-  MatCardModule, MatDialogModule, MatExpansionModule, MatGridListModule,
+  MatCardModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatProgressBarModule, MatSnackBarModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatSnackBarModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {environment} from '../environments/environment';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireModule } from 'angularfire2';
-import { AppRoutingModule } from './app-routing.module';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireModule} from 'angularfire2';
+import {AppRoutingModule} from './app-routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { ProductDetailsComponent } from './product-details/product-details.component';
+import {ProductDetailsComponent} from './product-details/product-details.component';
 import {AngularFireStorageModule} from '@angular/fire/storage';
+import {CartComponent} from './cart/cart.component';
+import {FinalizeComponent} from './finalize/finalize.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,7 +40,9 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     ProductsComponent,
     NaglowekComponent,
     ProductComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartComponent,
+    FinalizeComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -40,6 +50,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     AngularFireStorageModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatIconModule,
     MatToolbarModule,
     MatBadgeModule,
@@ -52,6 +63,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     MatPaginatorModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTableModule,
     FlexLayoutModule,
     AppRoutingModule
   ],

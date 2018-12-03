@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {CartService} from '../cart.service';
 
 @Component({
   selector: 'app-naglowek',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NaglowekComponent {
 
-  constructor() { }
+  items = 0;
+  price = 0;
 
+  constructor(private cartService: CartService) {
+    cartService.productsInCartChanged$
+      .subscribe(value => {
+        this.items = cartService.getSumOfProducts(value);
+        this.price = cartService.getAmountOfProducts(value);
+      });
+  }
 
 }

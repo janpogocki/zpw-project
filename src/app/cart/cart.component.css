@@ -1,0 +1,55 @@
+.buttons-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sum-up {
+  text-align: right;
+}
+
+.cursor-hand {
+  cursor: pointer;
+}
+
+.breakfiller {
+  width: 100%;
+  height: 2rem;
+}
+
+.breakfiller2 {
+  width: 2rem;
+}
+
+.breakfiller2long {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.header-row {
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px #eeeeee solid;
+}
+
+.header-row td {
+  border-bottom: 1px #eeeeee solid;
+  padding-bottom: 1rem;
+}
+
+.product-row td {
+  border-bottom: 1px #eeeeee solid;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.product-row {
+  text-align: center;
+}
+
+.product-row img {
+  max-width: 150px;
+  max-height: 150px;
+}

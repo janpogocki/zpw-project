@@ -1,0 +1,57 @@
+<h1><strong>Twój Koszyk</strong></h1>
+
+<div class="breakfiller"></div>
+
+<mat-card>
+
+  <div *ngIf="isCartEmpty()">
+     Koszyk jest pusty.
+  </div>
+
+  <div *ngIf="!isCartEmpty()">
+    <table>
+      <tr class="header-row">
+        <td></td> <!-- obrazek -->
+        <td>Produkt</td>
+        <td>Ilość</td>
+        <td>Cena</td>
+        <td>Wartość</td>
+        <td></td> <!-- usuwanie -->
+      </tr>
+
+      <tr *ngFor="let product of cartService.productsInCart" class="product-row">
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand"><img src="{{product.photoFullUrl}}" /></td>
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.name}}</td>
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.quantity}}</td>
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.price.toFixed(2)}} zł</td>
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{(product.price * product.quantity).toFixed(2)}} zł</td>
+        <td><button mat-raised-button color="warn" (click)="removeFromCart(product.id)">USUŃ</button></td>
+      </tr>
+    </table>
+
+    <div class="breakfiller"></div>
+
+    <div class="sum-up">
+      Do zapłaty:
+      <br>
+      <h1><strong>{{price.toFixed(2)}} zł</strong></h1>
+    </div>
+  </div>
+
+</mat-card>
+
+<div class="breakfiller"></div>
+
+<div class="buttons-div">
+
+  <button [disabled]="isCartEmpty()" mat-button color="warn" (click)="cartService.clearCart()">WYCZYŚĆ KOSZYK</button>
+
+  <div class="breakfiller2long"></div>
+
+  <button mat-button routerLink="/" color="primary">POWRÓT DO SKLEPU</button>
+
+  <div class="breakfiller2"></div>
+
+  <button [disabled]="isCartEmpty()" mat-raised-button color="primary" routerLink="/finalize">FINALIZUJ ZAMÓWIENIE</button>
+
+</div>

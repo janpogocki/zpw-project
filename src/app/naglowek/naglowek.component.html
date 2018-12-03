@@ -7,8 +7,9 @@
   <span class="fill-space"></span>
 
   <button mat-button routerLink="/cart">
-    <mat-icon matBadge="0" matBadgePosition="before above" matBadgeColor="accent">shopping_basket</mat-icon>
-    0.00 zł
+    <mat-icon *ngIf="items === 0">shopping_basket</mat-icon>
+    <mat-icon *ngIf="items > 0" matBadge="{{items}}" matBadgePosition="before above" matBadgeColor="accent">shopping_basket</mat-icon>
+    {{price.toFixed(2)}} zł
   </button>
 </mat-toolbar>
 

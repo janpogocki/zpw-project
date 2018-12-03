@@ -9,3 +9,11 @@
 .button-cart {
   margin-left: 2rem;
 }
+
+.detail-photo {
+  text-align: center;
+}
+
+.detail-photo img {
+  max-width: 100%;
+}

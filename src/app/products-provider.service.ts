@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Product} from './product/product';
-import {forkJoin, Observable, zip} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+import {AngularFireStorage} from '@angular/fire/storage';
 import {map} from 'rxjs/operators';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Injectable({
   providedIn: 'root'
@@ -27,26 +26,30 @@ export class ProductsProviderService {
   }
 
   getProductsWithPhotoFullUrl(): Observable<Product[]> {
-    return this.getProducts()
-      .pipe(map((products: Product[]) => {
-        return products.map((product: Product) => {
-          let newUrl: string;
-
-          this.getProductPhotoFullUrl(product)
-            .subscribe((url) => (newUrl = url));
-
-          return {photoFullUrl: newUrl, ...product};
-        });
-      }));
+    return this.getProducts().pipe(map(products => {
+      return products.map(product => {
+        return {photoFullUrl: '/assets/img/products/' + product.photo, ...product}; // todo
+      });
+    }));
   }
 
   getProduct(id: string): Observable<Product> {
-    return this.getProducts()
+    return this.getProductsWithPhotoFullUrl()
       .pipe(map(productList => productList.filter(product => product.id === id)[0]));
   }
 
   getProductPhotoFullUrl(product: Product): Observable<string> {
     const ref = this.storage.ref('products/' + product.photo);
     return ref.getDownloadURL();
+  }
+
+  sendCartToDB(name: string, email: string, address: string, cart: Product[], callback) {
+    const products: any[] = [];
+    cart.forEach(product => products.push({id: product.id, quantity: product.quantity}));
+
+    this.db.collection('orders')
+      .add({name: name, email: email, address: address, products: products})
+      .then(() => callback(true))
+      .catch(() => callback(false));
   }
 }

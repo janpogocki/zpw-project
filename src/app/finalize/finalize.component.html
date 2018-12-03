@@ -1,0 +1,35 @@
+<h1><strong>Finalizacja zamówienia</strong></h1>
+Aby Twoje zamówienie było zrealizowane, wypełnij poprawnie poniższy formularz. <i>Wszystkie pola są wymagane.</i>
+
+<div class="breakfiller"></div>
+<form onsubmit="return false; ">
+  <mat-card>
+
+    <div class="finalize-form">
+      <mat-form-field class="finalize-input">
+        <input matInput [(ngModel)]="name" name="name" placeholder="Imię i nazwisko" required>
+      </mat-form-field>
+
+      <mat-form-field class="finalize-input">
+        <input matInput [(ngModel)]="email" name="email" placeholder="E-mail" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field class="finalize-input">
+        <textarea matInput [(ngModel)]="address" name="address" placeholder="Adres dostawy" required></textarea>
+      </mat-form-field>
+    </div>
+
+  </mat-card>
+
+  <div class="breakfiller"></div>
+
+  <div class="buttons-div">
+
+    <button mat-button routerLink="/" color="primary">POWRÓT DO SKLEPU</button>
+
+    <div class="breakfiller2"></div>
+
+    <button mat-raised-button color="primary" (click)="sendForm()">ZŁÓŻ ZAMÓWIENIE</button>
+
+  </div>
+</form>
