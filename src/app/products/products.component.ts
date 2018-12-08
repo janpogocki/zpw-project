@@ -104,7 +104,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private haveToShowProduct(product: Product): boolean {
-    if (product.name.toLowerCase().startsWith(this.searchQuery.toLowerCase())
+    if (product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       && product.price >= this.sliderValue && product.price <= this.sliderHighValue
       && (product.category === this.categoryOption || this.categoryOption === 'all')) {
       return true;
