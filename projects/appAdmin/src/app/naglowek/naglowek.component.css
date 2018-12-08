@@ -1,0 +1,30 @@
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: fit-content;
+}
+
+.header-cell {
+  vertical-align: middle;
+}
+
+.logo-header {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+mat-toolbar {
+  position: fixed;
+  margin: 0 auto;
+  z-index: 999;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 2rem;
+}

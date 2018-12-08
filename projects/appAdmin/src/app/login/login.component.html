@@ -1,0 +1,21 @@
+<h1>Logowanie do AppAdmin</h1>
+<br><br>
+
+<mat-card class="login-box">
+  <div class="login-form">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Adres e-mail" #email>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Hasło" type="password" #password>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" class="full-width" (click)="tryToLogin(email.value, password.value)">
+      Zaloguj się
+    </button>
+  </div>
+  <div class="login-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-card>

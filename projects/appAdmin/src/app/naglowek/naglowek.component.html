@@ -1,0 +1,30 @@
+<mat-toolbar class="mat-elevation-z3" color="primary">
+  <button mat-button routerLink="/">
+    <mat-icon>shop</mat-icon>
+    AppAdmin
+  </button>
+
+  <button *ngIf="authService.getUserRole() === 0" mat-button routerLink="/products">
+    Produkty
+  </button>
+
+  <button *ngIf="authService.getUserRole() === 0" mat-button routerLink="/promotions">
+    Promocje
+  </button>
+
+  <button *ngIf="authService.getUserRole() === 0 || authService.getUserRole() === 1" mat-button routerLink="/orders">
+    Zamówienia
+  </button>
+
+  <span class="fill-space"></span>
+
+  <button *ngIf="authService.isUserEmailLoggedIn" mat-button (click)="logout()">
+    {{authService.userName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wyloguj się
+  </button>
+</mat-toolbar>
+
+<div class="mat-toolbar-single-row"></div>
+
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>
