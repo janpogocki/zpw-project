@@ -7,11 +7,10 @@ export class CartUtils {
     const singleProduct = {...product};
     singleProduct.quantity = quantity;
 
-    if (cartService.canAddToCart(singleProduct, product)){
+    if (cartService.canAddToCart(singleProduct, product)) {
       cartService.addToCart(singleProduct);
       CartUtils.showSnackbar(snackbar, 'Dodano do koszyka');
-    }
-    else {
+    } else {
       CartUtils.showSnackbar(snackbar, 'Masz już maksymalną możliwą ilość tego produktu w koszyku');
     }
   }

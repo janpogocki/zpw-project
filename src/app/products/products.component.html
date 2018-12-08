@@ -5,7 +5,7 @@
         <mat-label matPrefix><mat-icon>search</mat-icon></mat-label>
         <mat-label class="search-input">Wyszukaj w całym sklepie...</mat-label>
         <label>
-          <input matInput type="text" class="search-input" #search (keyup)="doSearchFilter(search.value)" />
+          <input matInput type="text" class="search-input" #search (keyup)="updateSearchQuery(search.value)" />
         </label>
       </mat-form-field>
     </form>
@@ -22,37 +22,45 @@
             Zakres cenowy
           </mat-panel-title>
         </mat-expansion-panel-header>
-
-        TODO zakres
+        <ng5-slider [(value)]="sliderValue" [(highValue)]="sliderHighValue" [options]="sliderOptions" (userChange)="doFilter()"></ng5-slider>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Kategorie
+            Kategorie i sortowanie
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        TODO kategorie
+        <strong>Wybrana kategoria:</strong>
+        <mat-select [(value)]="categoryOption" (selectionChange)="doFilter()">
+          <mat-option value="all">Wszystkie</mat-option>
+          <mat-option *ngFor="let category of categories" value="{{category}}">{{category}}</mat-option>
+        </mat-select>
+
+        <br><br>
+
+        <strong>Wybrany sposób sortowania:</strong>
+        <mat-select [(value)]="sortOption" (selectionChange)="doFilter()">
+          <mat-option value="a123">Alfabetycznie, rosnąco</mat-option>
+          <mat-option value="a321">Alfabetycznie, malejąco</mat-option>
+          <mat-option value="c123">Cenowo, rosnąco</mat-option>
+          <mat-option value="c321">Cenowo, malejąco</mat-option>
+        </mat-select>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Sortowanie
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        TODO sortowanie
-      </mat-expansion-panel>
     </mat-accordion>
   </div>
 
   <!------------------------->
 
   <div fxFlex="75%">
-    <mat-grid-list cols="4" rowHeight="1:1.5">
-      <mat-grid-tile *ngFor="let product of productsCopy">
+    <div class="loader" *ngIf="products.length === 0">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-grid-list *ngIf="products.length > 0" cols="4" rowHeight="1:1.5">
+      <mat-grid-tile *ngFor="let product of productsCopyPaginator">
         <mat-card class="mat-card-item">
           <app-product [product]="product"></app-product>
         </mat-card>

@@ -1,7 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {HelloComponent} from './hello/hello.component';
 import {ProductsComponent} from './products/products.component';
 import {AppComponent} from './app.component';
 import {NaglowekComponent} from './naglowek/naglowek.component';
@@ -17,7 +16,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressBarModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
   MatSnackBarModule,
   MatTableModule,
   MatToolbarModule
@@ -32,11 +31,11 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {CartComponent} from './cart/cart.component';
 import {FinalizeComponent} from './finalize/finalize.component';
 import {FormsModule} from '@angular/forms';
+import {Ng5SliderModule} from 'ng5-slider';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HelloComponent,
     ProductsComponent,
     NaglowekComponent,
     ProductComponent,
@@ -62,9 +61,12 @@ import {FormsModule} from '@angular/forms';
     MatProgressBarModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSelectModule,
     MatTableModule,
     FlexLayoutModule,
+    Ng5SliderModule,
     AppRoutingModule
   ],
   providers: [],

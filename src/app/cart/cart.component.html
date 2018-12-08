@@ -20,7 +20,7 @@
       </tr>
 
       <tr *ngFor="let product of cartService.productsInCart" class="product-row">
-        <td routerLink="/product/details/{{product.id}}" class="cursor-hand"><img src="{{product.photoFullUrl}}" /></td>
+        <td routerLink="/product/details/{{product.id}}" class="cursor-hand"><img src="{{product.photo}}" /></td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.name}}</td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.quantity}}</td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.price.toFixed(2)}} zł</td>

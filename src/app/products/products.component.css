@@ -62,3 +62,9 @@ mat-form-field {
   display: flex;
   justify-content: flex-end;
 }
+
+.loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
