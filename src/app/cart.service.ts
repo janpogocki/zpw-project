@@ -1,20 +1,38 @@
 import {Injectable} from '@angular/core';
 import {Product} from './product/product';
 import {BehaviorSubject} from 'rxjs';
+import {ProductsProviderService} from './products-provider.service';
+import {CartUtils} from './utils/cart-utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
+  products: Product[];
+
   productsInCart: Product[] = [];
   productsInCartChanged$ = new BehaviorSubject(this.productsInCart);
 
-  constructor() { }
+  constructor(private productsProvider: ProductsProviderService) {
+    this.productsProvider.getProducts()
+      .subscribe((products: Product[]) => {
+        this.products = products;
+
+        this.updatePricesInCart();
+
+        this.productsInCartChanged$.next(this.productsInCart);
+      });
+  }
+
+  changeInCartQuantity(id: string, change: number) {
+    this.productsInCart[CartUtils.getProductIndexById(id, this.productsInCart)].quantity += change;
+    this.productsInCartChanged$.next(this.productsInCart);
+  }
 
   addToCart(product: Product) {
-    if (this.getSumOfProductsById(product.id, this.productsInCart) > 0) {
-      this.productsInCart[this.getProductIndexById(product.id, this.productsInCart)].quantity += product.quantity;
+    if (CartUtils.getSumOfProductsById(product.id, this.productsInCart) > 0) {
+      this.productsInCart[CartUtils.getProductIndexById(product.id, this.productsInCart)].quantity += product.quantity;
     } else {
       this.productsInCart.push(product);
     }
@@ -23,12 +41,12 @@ export class CartService {
   }
 
   canAddToCart(singleProduct: Product, product: Product): boolean {
-    return this.getSumOfProductsById(singleProduct.id, this.productsInCart) + singleProduct.quantity <= product.quantity;
+    return CartUtils.getSumOfProductsById(singleProduct.id, this.productsInCart) + singleProduct.quantity <= product.quantity;
   }
 
   removeFromCart(id: string) {
-    if (this.getSumOfProductsById(id, this.productsInCart) > 0) {
-      this.productsInCart.splice(this.getProductIndexById(id, this.productsInCart), 1);
+    if (CartUtils.getSumOfProductsById(id, this.productsInCart) > 0) {
+      this.productsInCart.splice(CartUtils.getProductIndexById(id, this.productsInCart));
     }
 
     this.productsInCartChanged$.next(this.productsInCart);
@@ -39,50 +57,10 @@ export class CartService {
     this.productsInCartChanged$.next(this.productsInCart);
   }
 
-  getSumOfProducts(array: Product[]): number {
-    let i = 0;
-
-    for (const entry of array) {
-      i += entry.quantity;
+  updatePricesInCart() {
+    for (const entry of this.productsInCart) {
+      entry.price = this.products[CartUtils.getProductIndexById(entry.id, this.products)].price;
     }
-
-    return i;
-  }
-
-  getAmountOfProducts(array: Product[]): number {
-    let i = 0;
-
-    for (const entry of array) {
-      i += entry.price * entry.quantity;
-    }
-
-    return i;
-  }
-
-  getSumOfProductsById(id: string, array: Product[]): number {
-    let i = 0;
-
-    for (const entry of array) {
-      if (entry.id === id) {
-        i += entry.quantity;
-      }
-    }
-
-    return i;
-  }
-
-  getProductIndexById(id: string, array: Product[]): number {
-    let i = 0;
-
-    for (const entry of array) {
-      if (entry.id === id) {
-        return i;
-      } else {
-        i++;
-      }
-    }
-
-    return null;
   }
 
 }

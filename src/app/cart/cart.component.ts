@@ -17,8 +17,8 @@ export class CartComponent implements OnInit {
               private snackbar: MatSnackBar) {
     cartService.productsInCartChanged$
       .subscribe(value => {
-        this.items = cartService.getSumOfProducts(value);
-        this.price = cartService.getAmountOfProducts(value);
+        this.items = CartUtils.getSumOfProducts(value);
+        this.price = CartUtils.getAmountOfProducts(value);
       });
   }
 
@@ -34,6 +34,16 @@ export class CartComponent implements OnInit {
     CartUtils.showSnackbar(this.snackbar, 'Produkt usunięty z koszyka');
   }
 
-  // todo add + / -
+  changeQuantity(id: string, change: number) {
+    this.cartService.changeInCartQuantity(id, change);
+  }
+
+  isQuantityEqualsToMin(id: string, value: number): boolean {
+    return value === 1;
+  }
+
+  isQuantityEqualsToMax(id: string, value: number): boolean {
+    return this.cartService.products[CartUtils.getProductIndexById(id, this.cartService.products)].quantity === value;
+  }
 
 }

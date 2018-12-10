@@ -20,4 +20,50 @@ export class CartUtils {
       duration: 3000,
     });
   }
+
+  static getSumOfProducts(array: Product[]): number {
+    let i = 0;
+
+    for (const entry of array) {
+      i += entry.quantity;
+    }
+
+    return i;
+  }
+
+  static getAmountOfProducts(array: Product[]): number {
+    let i = 0;
+
+    for (const entry of array) {
+      i += entry.price * entry.quantity;
+    }
+
+    return i;
+  }
+
+  static getSumOfProductsById(id: string, array: Product[]): number {
+    let i = 0;
+
+    for (const entry of array) {
+      if (entry.id === id) {
+        i += entry.quantity;
+      }
+    }
+
+    return i;
+  }
+
+  static getProductIndexById(id: string, array: Product[]): number {
+    let i = 0;
+
+    for (const entry of array) {
+      if (entry.id === id) {
+        return i;
+      } else {
+        i++;
+      }
+    }
+
+    return null;
+  }
 }

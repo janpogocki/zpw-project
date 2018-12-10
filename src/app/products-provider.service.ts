@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {Product} from './product/product';
 import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {map} from 'rxjs/operators';
+import {findIndex, map} from 'rxjs/operators';
+import {CartUtils} from './utils/cart-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -42,13 +43,21 @@ export class ProductsProviderService {
     }
   }
 
-  sendCartToDB(name: string, email: string, address: string, cart: Product[], callback) {
+  sendCartToDB(name: string, email: string, address: string, cart: Product[], currentProducts: Product[], callback) {
     const products: any[] = [];
     cart.forEach(product => products.push({id: product.id, quantity: product.quantity}));
 
     this.db.collection('orders')
-      .add({name: name, email: email, address: address, products: products})
-      .then(() => callback(true))
+      .add({name: name, email: email, address: address, status: 0, products: products})
+      .then(() => {
+        for (const entry of cart) {
+          this.db.collection('products')
+            .doc(entry.id)
+            .update({quantity: currentProducts[CartUtils.getProductIndexById(entry.id, currentProducts)].quantity - entry.quantity});
+        }
+
+        callback(true);
+      })
       .catch(() => callback(false));
   }
 

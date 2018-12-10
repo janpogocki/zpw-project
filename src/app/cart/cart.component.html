@@ -22,7 +22,11 @@
       <tr *ngFor="let product of cartService.productsInCart" class="product-row">
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand"><img src="{{product.photo}}" /></td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.name}}</td>
-        <td><button mat-button (click)="changeQuantity(product.id, -1)">-</button> {{product.quantity}} <button mat-button (click)="changeQuantity(product.id, 1)">+</button></td>
+        <td>
+          <button [disabled]="isQuantityEqualsToMin(product.id, product.quantity)" mat-button (click)="changeQuantity(product.id, -1)">-</button>
+          &nbsp;{{product.quantity}}&nbsp;
+          <button [disabled]="isQuantityEqualsToMax(product.id, product.quantity)" mat-button (click)="changeQuantity(product.id, 1)">+</button>
+        </td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{product.price.toFixed(2)}} zł</td>
         <td routerLink="/product/details/{{product.id}}" class="cursor-hand">{{(product.price * product.quantity).toFixed(2)}} zł</td>
         <td><button mat-raised-button color="warn" (click)="removeFromCart(product.id)">USUŃ</button></td>

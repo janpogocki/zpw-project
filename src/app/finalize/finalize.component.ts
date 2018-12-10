@@ -25,7 +25,7 @@ export class FinalizeComponent implements OnInit {
   }
 
   sendForm() {
-    this.productsProvider.sendCartToDB(this.name, this.email, this.address, this.cartService.productsInCart,
+    this.productsProvider.sendCartToDB(this.name, this.email, this.address, this.cartService.productsInCart, this.cartService.products,
       (success) => {
         if (success) {
           CartUtils.showSnackbar(this.snackbar, 'Zamówienie zostało wysłane, dziękujemy!');
