@@ -11,7 +11,7 @@ import {CartUtils} from '../../../../../src/app/utils/cart-utils';
 })
 export class NaglowekComponent {
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router,
               private snackbar: MatSnackBar) {
   }

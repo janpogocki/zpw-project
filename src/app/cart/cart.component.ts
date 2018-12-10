@@ -34,4 +34,6 @@ export class CartComponent implements OnInit {
     CartUtils.showSnackbar(this.snackbar, 'Produkt usunięty z koszyka');
   }
 
+  // todo add + / -
+
 }

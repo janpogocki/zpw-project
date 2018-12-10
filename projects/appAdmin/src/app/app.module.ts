@@ -9,10 +9,19 @@ import {FormsModule} from '@angular/forms';
 import {
   MatBadgeModule,
   MatButtonModule,
-  MatCardModule, MatDialogModule, MatExpansionModule,
+  MatCardModule, MatCheckboxModule,
+  MatDialogModule,
+  MatExpansionModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSnackBarModule, MatTableModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -25,6 +34,7 @@ import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { OrdersComponent } from './orders/orders.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +43,8 @@ import { OrdersComponent } from './orders/orders.component';
     LoginComponent,
     ProductsComponent,
     PromotionsComponent,
-    OrdersComponent
+    OrdersComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +69,8 @@ import { OrdersComponent } from './orders/orders.component';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatSortModule,
+    MatCheckboxModule,
     MatTableModule,
     FlexLayoutModule,
     Ng5SliderModule,

@@ -28,6 +28,20 @@ export class ProductsProviderService {
       .pipe(map(productList => productList.filter(product => product.id === id)[0]));
   }
 
+  saveProductInDB(product: Product): Promise<any> {
+    const newProduct = {...product};
+    delete newProduct.id;
+
+    if (product.id === null) {
+      return this.db.collection('products')
+        .add(newProduct);
+    } else {
+      return this.db.collection(('products'))
+        .doc(product.id)
+        .update(newProduct);
+    }
+  }
+
   sendCartToDB(name: string, email: string, address: string, cart: Product[], callback) {
     const products: any[] = [];
     cart.forEach(product => products.push({id: product.id, quantity: product.quantity}));
@@ -36,5 +50,10 @@ export class ProductsProviderService {
       .add({name: name, email: email, address: address, products: products})
       .then(() => callback(true))
       .catch(() => callback(false));
+  }
+
+  removeProductInDB(id: string): Promise<void> {
+    return this.db.collection('products')
+      .doc(id).delete();
   }
 }

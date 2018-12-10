@@ -1,3 +1,39 @@
-<p>
-  products works!
-</p>
+<h1>Produkty</h1>
+
+<div class="buttons-div">
+  <button mat-raised-button color="primary" (click)="setPromotion()" [disabled]="isPromotionsButtonDisabled()">USTAW PROMOCJĘ</button>
+  &nbsp;
+  <button mat-raised-button color="primary" routerLink="/product/new">DODAJ PRODUKT</button>
+</div>
+
+<mat-card>
+
+  <table matSort (matSortChange)="sortData($event)">
+    <tr>
+      <th></th>
+      <th mat-sort-header="name">Nazwa</th>
+      <th mat-sort-header="quantity">Ilość</th>
+      <th mat-sort-header="price">Cena</th>
+      <th></th>
+    </tr>
+
+    <tr *ngFor="let product of sortedProducts">
+      <td><mat-checkbox (click)="addOrRemoveIdInCheckedProducts(product.id)"></mat-checkbox></td>
+      <td>{{product.name}}</td>
+      <td>{{product.quantity}}</td>
+      <td>{{product.price.toFixed(2)}} zł</td>
+      <td>
+        <button mat-button color="primary" routerLink="/product/{{product.id}}">EDYTUJ</button>
+        &nbsp;
+        <button mat-button color="warn" (click)="remove(product.id)">USUŃ</button>
+      </td>
+    </tr>
+  </table>
+
+
+</mat-card>
+
+<!--<div class="buttons-div">
+  <button mat-button color="primary" routerLink="/addproduct">USTAW PROMOCJĘ</button>
+  <button mat-raised-button color="primary" routerLink="/addproduct">DODAJ PRODUKT</button>
+</div>-->
