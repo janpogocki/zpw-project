@@ -20,7 +20,7 @@
           <h4 class="promotion-red">
             PROMOCJA -{{product.discountPercentage.toFixed(0)}}%
             <br>
-            TYLKO PRZEZ: <countdown [config]="{stopTime: product.discountTimeout}">$!h!:$!m!:$!s!</countdown>
+            TYLKO PRZEZ: <countdown [config]="{stopTime: product.discountTimeout}" (finished)="refreshPromotion()">$!h!:$!m!:$!s!</countdown>
           </h4>
         </div>
         <br><br>

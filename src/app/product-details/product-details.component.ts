@@ -59,4 +59,10 @@ export class ProductDetailsComponent implements OnInit {
     CartUtils.addToCart(this.product, Number(quantity), this.cartService, this.snackbar);
   }
 
+  refreshPromotion() {
+    this.product.discountTimeout = undefined;
+    this.product.price = this.product.oldPrice;
+    this.product.oldPrice = undefined;
+  }
+
 }

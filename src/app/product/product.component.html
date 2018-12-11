@@ -5,7 +5,7 @@
     <span class="item-discount">
       Promocja -{{product.discountPercentage.toFixed(0)}}%
       <br>
-      <countdown [config]="{stopTime: product.discountTimeout}">$!h!:$!m!:$!s!</countdown>
+      <countdown [config]="{stopTime: product.discountTimeout}" (finished)="refreshPromotion()">$!h!:$!m!:$!s!</countdown>
     </span>
   </div>
   <div class="container-product-item">

@@ -26,5 +26,11 @@ export class ProductComponent implements OnInit {
     CartUtils.addToCart(this.product, 1, this.cartService, this.snackbar);
   }
 
+  refreshPromotion() {
+    this.product.discountTimeout = undefined;
+    this.product.price = this.product.oldPrice;
+    this.product.oldPrice = undefined;
+  }
+
 }
 
