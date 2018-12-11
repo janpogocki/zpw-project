@@ -35,6 +35,11 @@ export class ProductsComponent implements OnInit {
         this.products = products;
         this.sortedProducts = products.slice();
       });
+
+    this.productsProvider.getCurrentPromotions()
+      .subscribe((body: any) => {
+        // todo
+      });
   }
 
   sortData(sort: Sort) {

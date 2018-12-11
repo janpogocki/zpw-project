@@ -6,4 +6,8 @@ export class Product {
   description: string;
   photo: string;
   category: string;
+
+  oldPrice: number;
+  discountTimeout: number;
+  discountPercentage: number;
 }

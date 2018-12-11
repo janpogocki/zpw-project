@@ -1,24 +1,26 @@
 import {Injectable} from '@angular/core';
 import {Product} from './product/product';
-import {Observable} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {findIndex, map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {CartUtils} from './utils/cart-utils';
+import {forEach} from '@angular/router/src/utils/collection';
+import * as firebase from 'firebase';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsProviderService {
 
-  productsFromDB: AngularFirestoreCollection<Product>;
-
   constructor(private db: AngularFirestore) {
 
   }
 
   getProducts(): Observable<Product[]> {
-    this.productsFromDB = this.db.collection('products');
-    return this.productsFromDB
+    let productsFromDB: AngularFirestoreCollection<Product>;
+    productsFromDB = this.db.collection('products');
+    return productsFromDB
       .snapshotChanges()
       .pipe(map((changes) =>
         changes.map(a => ({id: a.payload.doc.id, ...a.payload.doc.data()}))));
@@ -27,6 +29,17 @@ export class ProductsProviderService {
   getProduct(id: string): Observable<Product> {
     return this.getProducts()
       .pipe(map(productList => productList.filter(product => product.id === id)[0]));
+  }
+
+  getCurrentPromotions(): Observable<any> {
+    const currentTime = new Date().getTime() / 1000;
+
+    let valueChanges: Observable<any>;
+    valueChanges = this.db.collection('discounts')
+      .valueChanges();
+
+    return valueChanges
+      .pipe(map((promotionList: any[]) => promotionList.filter((promotion: any) => promotion.discountEndTime.seconds > currentTime)));
   }
 
   saveProductInDB(product: Product): Promise<any> {

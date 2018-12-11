@@ -14,6 +14,15 @@
         {{product.description}}
         <br><br>
         <h2>{{product.price.toFixed(2)}} zł</h2>
+        <div class="div-promotion" *ngIf="product.discountTimeout !== undefined">
+          <h3 class="old-price">{{product.oldPrice.toFixed(2)}} zł</h3>
+          <div class="breakfiller"></div>
+          <h4 class="promotion-red">
+            PROMOCJA -{{product.discountPercentage.toFixed(0)}}%
+            <br>
+            TYLKO PRZEZ: <countdown [config]="{stopTime: product.discountTimeout}">$!h!:$!m!:$!s!</countdown>
+          </h4>
+        </div>
         <br><br>
 
         <div>

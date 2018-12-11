@@ -3,6 +3,7 @@ import {Product} from '../product/product';
 import {ProductsProviderService} from '../products-provider.service';
 import {PageEvent} from '@angular/material';
 import {Options} from 'ng5-slider';
+import {CartUtils} from '../utils/cart-utils';
 
 @Component({
   selector: 'app-products',
@@ -34,6 +35,10 @@ export class ProductsComponent implements OnInit {
     ceil: 100
   };
 
+  // promotions
+  productPercentValue: number;
+  prodcutsDiscount: string[];
+
   constructor(private productsProvider: ProductsProviderService) {
     this.products = [];
     this.productsCopy = [];
@@ -51,6 +56,43 @@ export class ProductsComponent implements OnInit {
         this.setSliderValues();
         this.doFilter();
       });
+
+   this.productsProvider.getCurrentPromotions()
+     .subscribe((entry: any) => {
+       this.clearPromotions();
+
+       for (const body of entry) {
+         this.productPercentValue = body.productPercentValue;
+         this.prodcutsDiscount = body.products;
+
+         for (const id of this.prodcutsDiscount) {
+           if (this.products[CartUtils.getProductIndexById(id, this.products)].oldPrice !== undefined) {
+             this.products[CartUtils.getProductIndexById(id, this.products)].price =
+               this.products[CartUtils.getProductIndexById(id, this.products)].oldPrice;
+           }
+
+           this.products[CartUtils.getProductIndexById(id, this.products)].oldPrice =
+             this.products[CartUtils.getProductIndexById(id, this.products)].price;
+
+           this.products[CartUtils.getProductIndexById(id, this.products)].price -=
+             this.products[CartUtils.getProductIndexById(id, this.products)].price * this.productPercentValue;
+
+           this.products[CartUtils.getProductIndexById(id, this.products)].price =
+             Math.round(this.products[CartUtils.getProductIndexById(id, this.products)].price * 100) / 100;
+
+           this.products[CartUtils.getProductIndexById(id, this.products)].discountTimeout = body.discountEndTime.seconds * 1000;
+           this.products[CartUtils.getProductIndexById(id, this.products)].discountPercentage = this.productPercentValue * 100;
+         }
+       }
+
+       this.setSliderValues();
+     });
+  }
+
+  clearPromotions() {
+    for (const entry of this.products) {
+      entry.discountTimeout = undefined;
+    }
   }
 
   doFilter() {
@@ -133,11 +175,11 @@ export class ProductsComponent implements OnInit {
       }
     }
 
-    this.sliderValue = lowest.price;
-    this.sliderHighValue = highest.price;
+    this.sliderValue = Math.round(lowest.price * 100) / 100;
+    this.sliderHighValue = Math.round(highest.price * 100) / 100;
     this.sliderOptions = {
-      floor: lowest.price,
-      ceil: highest.price
+      floor: Math.round(lowest.price * 100) / 100,
+      ceil: Math.round(highest.price * 100) / 100
     };
   }
 }

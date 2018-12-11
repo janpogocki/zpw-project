@@ -17,3 +17,20 @@
 .detail-photo img {
   max-width: 100%;
 }
+
+.old-price {
+  color: darkgray;
+  text-decoration: line-through;
+}
+
+.promotion-red {
+  color: red;
+}
+
+.div-promotion {
+  display: flex;
+}
+
+.breakfiller {
+  width: 2rem;
+}

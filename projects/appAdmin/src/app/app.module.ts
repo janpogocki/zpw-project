@@ -35,6 +35,7 @@ import { ProductsComponent } from './products/products.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { OrdersComponent } from './orders/orders.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import {CountdownModule} from 'ngx-countdown';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     MatSelectModule,
     MatSortModule,
     MatCheckboxModule,
+    CountdownModule,
     MatTableModule,
     FlexLayoutModule,
     Ng5SliderModule,

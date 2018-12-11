@@ -32,6 +32,7 @@ import {CartComponent} from './cart/cart.component';
 import {FinalizeComponent} from './finalize/finalize.component';
 import {FormsModule} from '@angular/forms';
 import {Ng5SliderModule} from 'ng5-slider';
+import {CountdownModule} from 'ngx-countdown';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {Ng5SliderModule} from 'ng5-slider';
     MatTableModule,
     FlexLayoutModule,
     Ng5SliderModule,
+    CountdownModule,
     AppRoutingModule
   ],
   providers: [],
