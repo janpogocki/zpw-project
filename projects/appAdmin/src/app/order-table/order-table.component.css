@@ -1,0 +1,9 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+td {
+  border-bottom: 1px solid #eeeeee;
+  padding: 1rem;
+}

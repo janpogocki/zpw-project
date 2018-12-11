@@ -15,6 +15,11 @@ export class CartService {
   productsInCartChanged$ = new BehaviorSubject(this.productsInCart);
 
   constructor(private productsProvider: ProductsProviderService) {
+    const productsInLocalStorage = localStorage.getItem('productsInChart');
+    if (productsInLocalStorage !== null) {
+      this.productsInCart = JSON.parse(productsInLocalStorage);
+    }
+
     this.productsProvider.getProducts()
       .subscribe((products: Product[]) => {
         this.products = products;
@@ -33,10 +38,12 @@ export class CartService {
   addToCart(product: Product) {
     if (CartUtils.getSumOfProductsById(product.id, this.productsInCart) > 0) {
       this.productsInCart[CartUtils.getProductIndexById(product.id, this.productsInCart)].quantity += product.quantity;
+      this.productsInCart[CartUtils.getProductIndexById(product.id, this.productsInCart)].price = product.price;
     } else {
       this.productsInCart.push(product);
     }
 
+    localStorage.setItem('productsInChart', JSON.stringify(this.productsInCart));
     this.productsInCartChanged$.next(this.productsInCart);
   }
 
@@ -46,14 +53,16 @@ export class CartService {
 
   removeFromCart(id: string) {
     if (CartUtils.getSumOfProductsById(id, this.productsInCart) > 0) {
-      this.productsInCart.splice(CartUtils.getProductIndexById(id, this.productsInCart));
+      this.productsInCart.splice(CartUtils.getProductIndexById(id, this.productsInCart), 1);
     }
 
+    localStorage.setItem('productsInChart', JSON.stringify(this.productsInCart));
     this.productsInCartChanged$.next(this.productsInCart);
   }
 
   clearCart() {
     this.productsInCart = [];
+    localStorage.removeItem('productsInChart');
     this.productsInCartChanged$.next(this.productsInCart);
   }
 

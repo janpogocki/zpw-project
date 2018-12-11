@@ -1,0 +1,29 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Zamówione produkty</th>
+    <th>Imię i nazwisko</th>
+    <th>Adres dostawy</th>
+    <th>E-mail</th>
+    <th></th><!-- buttony -->
+  </tr>
+
+  <tr *ngFor="let order of orders">
+    <td>{{order.id}}</td>
+    <td>
+      <ul>
+        <li *ngFor="let item of getReadableProducts(order.products)">{{item}}</li>
+      </ul>
+    </td>
+    <td>{{order.name}}</td>
+    <td>{{order.address}}</td>
+    <td>{{order.email}}</td>
+    <td>
+      <div *ngIf="order.status === 0">
+        <button mat-button color="primary" (click)="finish(order.id)">ZREALIZUJ</button>
+        &nbsp;
+        <button mat-button color="warn" (click)="reject(order.id, order)">ODRZUĆ</button>
+      </div>
+    </td>
+  </tr>
+</table>

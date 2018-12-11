@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductsProviderService} from '../../../../../src/app/products-provider.service';
-import {Product} from '../../../../../src/app/product/product';
 import {MatSnackBar} from '@angular/material';
 import {CartUtils} from '../../../../../src/app/utils/cart-utils';
 import {AuthService} from '../auth.service';
@@ -14,7 +13,7 @@ import {AuthService} from '../auth.service';
 export class EditProductComponent implements OnInit {
 
   id: string;
-  product: Product;
+  product: any;
 
   constructor(private route: ActivatedRoute,
               private productsProvider: ProductsProviderService,

@@ -1,12 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Product} from './product/product';
-import {Observable, pipe} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {filter, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {CartUtils} from './utils/cart-utils';
-import {forEach} from '@angular/router/src/utils/collection';
-import * as firebase from 'firebase';
-import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +33,15 @@ export class ProductsProviderService {
 
     let valueChanges: Observable<any>;
     valueChanges = this.db.collection('discounts')
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(map((changes) =>
+        changes.map(a => ({id: a.payload.doc.id, ...a.payload.doc.data()}))));
 
     return valueChanges
       .pipe(map((promotionList: any[]) => promotionList.filter((promotion: any) => promotion.discountEndTime.seconds > currentTime)));
   }
 
-  saveProductInDB(product: Product): Promise<any> {
+  saveProductInDB(product: any): Promise<any> {
     const newProduct = {...product};
     delete newProduct.id;
 
@@ -77,5 +76,59 @@ export class ProductsProviderService {
   removeProductInDB(id: string): Promise<void> {
     return this.db.collection('products')
       .doc(id).delete();
+  }
+
+  getPendingOrders(): Observable<any> {
+    let valueChanges: Observable<any>;
+    valueChanges = this.db.collection('orders')
+      .snapshotChanges()
+      .pipe(map((changes) =>
+        changes.map(a => ({id: a.payload.doc.id, ...a.payload.doc.data()}))));
+
+    return valueChanges
+      .pipe(map((ordersList: any[]) => ordersList.filter((order: any) => order.status === 0)));
+  }
+
+  getFinishedOrders(): Observable<any> {
+    let valueChanges: Observable<any>;
+    valueChanges = this.db.collection('orders')
+      .snapshotChanges()
+      .pipe(map((changes) =>
+        changes.map(a => ({id: a.payload.doc.id, ...a.payload.doc.data()}))));
+
+    return valueChanges
+      .pipe(map((ordersList: any[]) => ordersList.filter((order: any) => order.status === 1)));
+  }
+
+  getRejectedOrders(): Observable<any> {
+    let valueChanges: Observable<any>;
+    valueChanges = this.db.collection('orders')
+      .snapshotChanges()
+      .pipe(map((changes) =>
+        changes.map(a => ({id: a.payload.doc.id, ...a.payload.doc.data()}))));
+
+    return valueChanges
+      .pipe(map((ordersList: any[]) => ordersList.filter((order: any) => order.status === -1)));
+  }
+
+  finishOrder(id: string): Promise<any> {
+    return this.db.collection('orders')
+      .doc(id)
+      .update({status: 1});
+  }
+
+  rejectOrder(id: string, products: any[], db: Product[]) {
+    return this.db.collection('orders')
+      .doc(id)
+      .update({status: -1})
+      .then(() => {
+        for (const product of products) {
+          const quantity = db[CartUtils.getProductIndexById(product.id, db)].quantity + product.quantity;
+
+          this.db.collection('products')
+            .doc(product.id)
+            .update({quantity});
+        }
+      });
   }
 }

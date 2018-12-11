@@ -16,7 +16,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
   MatSnackBarModule,
   MatTableModule,
   MatToolbarModule
