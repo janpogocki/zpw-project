@@ -20,6 +20,7 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
   MatTableModule,
@@ -37,6 +38,7 @@ import {OrdersComponent} from './orders/orders.component';
 import {EditProductComponent} from './edit-product/edit-product.component';
 import {CountdownModule} from 'ngx-countdown';
 import {OrderTableComponent} from './order-table/order-table.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import {OrderTableComponent} from './order-table/order-table.component';
     MatTableModule,
     FlexLayoutModule,
     Ng5SliderModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSlideToggleModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [NaglowekComponent]

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 import {AngularFirestore} from 'angularfire2/firestore';
+import {ProductsProviderService} from '../../../../src/app/products-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,12 @@ export class AuthService {
   userRole: number;
   userName: string;
 
+  public firebaseDataLoaded = false;
+
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
-              private db: AngularFirestore) {
+              private db: AngularFirestore,
+              private productsProviderService: ProductsProviderService) {
     this.authState = null;
     this.userRole = null;
 
@@ -82,5 +86,22 @@ export class AuthService {
     this.userRole = null;
     this.authState = null;
     return this.afAuth.auth.signOut();
+  }
+
+  getFirebaseStatusDocument(): Promise<boolean> {
+    const backendDb = this.db.collection('backend');
+
+    return backendDb
+      .doc('backend').ref.get()
+      .then(doc => doc.data().firebase);
+  }
+
+  changeBackend(): Promise<any> {
+    const backendDb = this.db.collection('backend');
+
+    return backendDb
+      .doc('backend')
+      .update({firebase: !this.productsProviderService.firebaseBackendActive})
+      .then(() => this.productsProviderService.firebaseBackendActive = !this.productsProviderService.firebaseBackendActive);
   }
 }

@@ -3,6 +3,7 @@ import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 import {CartUtils} from '../../../../../src/app/utils/cart-utils';
+import {ProductsProviderService} from '../../../../../src/app/products-provider.service';
 
 @Component({
   selector: 'app-admin-naglowek',
@@ -13,7 +14,8 @@ export class NaglowekComponent {
 
   constructor(public authService: AuthService,
               private router: Router,
-              private snackbar: MatSnackBar) {
+              private snackbar: MatSnackBar,
+              private productsService: ProductsProviderService) {
   }
 
   logout() {
@@ -21,6 +23,15 @@ export class NaglowekComponent {
       .then(() => {
         this.router.navigate(['/'])
           .then(() => CartUtils.showSnackbar(this.snackbar, 'Wylogowano poprawnie!'));
+      });
+  }
+
+  changeBackend() {
+    this.authService.changeBackend()
+      .then(() => {
+        this.router.navigateByUrl('/', {skipLocationChange: true})
+          .then(() => this.router.navigate(['NaglowekComponent']));
+        CartUtils.showSnackbar(this.snackbar, 'Zmieniono backend');
       });
   }
 }

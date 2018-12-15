@@ -14,8 +14,21 @@
 
   <span class="fill-space"></span>
 
+  <mat-slide-toggle
+      *ngIf="authService.getUserRole() === 0"
+      [checked]="productsService.firebaseBackendActive"
+      (click)="changeBackend()">
+    Firebase backend
+  </mat-slide-toggle>
+
+  <span class="fill-space"></span>
+
+  <button *ngIf="authService.getUserRole() === 0 || authService.getUserRole() === 1" mat-button>
+    {{authService.userName}}
+  </button>
+
   <button *ngIf="authService.getUserRole() === 0 || authService.getUserRole() === 1" mat-button (click)="logout()">
-    {{authService.userName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wyloguj się
+    Wyloguj się
   </button>
 </mat-toolbar>
 

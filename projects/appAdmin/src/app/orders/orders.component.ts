@@ -27,6 +27,20 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.firebaseDataLoaded === false) {
+      this.authService.getFirebaseStatusDocument()
+        .then((status) => {
+          this.productsProvider.firebaseBackendActive = status;
+          this.authService.firebaseDataLoaded = true;
+
+          this.getData();
+        });
+    } else {
+      this.getData();
+    }
+  }
+
+  getData() {
     this.productsProvider.getProducts()
       .subscribe(products => this.products = products);
 

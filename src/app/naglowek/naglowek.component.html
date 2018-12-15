@@ -1,20 +1,26 @@
-<mat-toolbar class="mat-elevation-z3" color="primary">
-  <button mat-button routerLink="/">
-    <mat-icon>shop</mat-icon>
-    Sklep Tesco
-  </button>
+<div class="loading-data" *ngIf="!firebaseDataLoaded">
+  <mat-spinner></mat-spinner>
+</div>
 
-  <span class="fill-space"></span>
+<div *ngIf="firebaseDataLoaded">
+  <mat-toolbar class="mat-elevation-z3" color="primary">
+    <button mat-button routerLink="/">
+      <mat-icon>shop</mat-icon>
+      Sklep Tesco
+    </button>
 
-  <button mat-button routerLink="/cart">
-    <mat-icon *ngIf="items === 0">shopping_basket</mat-icon>
-    <mat-icon *ngIf="items > 0" matBadge="{{items}}" matBadgePosition="before above" matBadgeColor="accent">shopping_basket</mat-icon>
-    {{price.toFixed(2)}} zł
-  </button>
-</mat-toolbar>
+    <span class="fill-space"></span>
 
-<div class="mat-toolbar-single-row"></div>
+    <button mat-button routerLink="/cart">
+      <mat-icon *ngIf="items === 0">shopping_basket</mat-icon>
+      <mat-icon *ngIf="items > 0" matBadge="{{items}}" matBadgePosition="before above" matBadgeColor="accent">shopping_basket</mat-icon>
+      {{price.toFixed(2)}} zł
+    </button>
+  </mat-toolbar>
 
-<div class="app-container">
-  <router-outlet></router-outlet>
+  <div class="mat-toolbar-single-row"></div>
+
+  <div class="app-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

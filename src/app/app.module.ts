@@ -35,6 +35,7 @@ import {FinalizeComponent} from './finalize/finalize.component';
 import {FormsModule} from '@angular/forms';
 import {Ng5SliderModule} from 'ng5-slider';
 import {CountdownModule} from 'ngx-countdown';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {CountdownModule} from 'ngx-countdown';
     FlexLayoutModule,
     Ng5SliderModule,
     CountdownModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [NaglowekComponent]

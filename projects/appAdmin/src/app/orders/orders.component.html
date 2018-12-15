@@ -1,36 +1,42 @@
-<h1>Zamówienia oczekujące</h1>
+<div class="loading-data" *ngIf="!authService.firebaseDataLoaded">
+  <mat-spinner></mat-spinner>
+</div>
 
-<mat-card>
-  <div *ngIf="pendingOrders.length === 0">
-    Brak zamówień
-  </div>
-  <div *ngIf="pendingOrders.length > 0">
-    <app-order-table [products]="products" [orders]="pendingOrders"></app-order-table>
-  </div>
-</mat-card>
+<div *ngIf="authService.firebaseDataLoaded">
+  <h1>Zamówienia oczekujące</h1>
 
-<div class="breakfiller"></div>
+  <mat-card>
+    <div *ngIf="pendingOrders.length === 0">
+      Brak zamówień
+    </div>
+    <div *ngIf="pendingOrders.length > 0">
+      <app-order-table [products]="products" [orders]="pendingOrders"></app-order-table>
+    </div>
+  </mat-card>
 
-<h1>Zamówienia zrealizowane</h1>
+  <div class="breakfiller"></div>
 
-<mat-card>
-  <div *ngIf="finishedOrders.length === 0">
-    Brak zamówień
-  </div>
-  <div *ngIf="finishedOrders.length > 0">
-    <app-order-table [products]="products" [orders]="finishedOrders"></app-order-table>
-  </div>
-</mat-card>
+  <h1>Zamówienia zrealizowane</h1>
 
-<div class="breakfiller"></div>
+  <mat-card>
+    <div *ngIf="finishedOrders.length === 0">
+      Brak zamówień
+    </div>
+    <div *ngIf="finishedOrders.length > 0">
+      <app-order-table [products]="products" [orders]="finishedOrders"></app-order-table>
+    </div>
+  </mat-card>
 
-<h1>Zamówienia odrzucone</h1>
+  <div class="breakfiller"></div>
 
-<mat-card>
-  <div *ngIf="rejectedOrders.length === 0">
-    Brak zamówień
-  </div>
-  <div *ngIf="rejectedOrders.length > 0">
-    <app-order-table [products]="products" [orders]="rejectedOrders"></app-order-table>
-  </div>
-</mat-card>
+  <h1>Zamówienia odrzucone</h1>
+
+  <mat-card>
+    <div *ngIf="rejectedOrders.length === 0">
+      Brak zamówień
+    </div>
+    <div *ngIf="rejectedOrders.length > 0">
+      <app-order-table [products]="products" [orders]="rejectedOrders"></app-order-table>
+    </div>
+  </mat-card>
+</div>
