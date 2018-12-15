@@ -1,8 +1,15 @@
+const serverDomain = 'http://localhost';
+const serverPort = 5000;
+
 const express = require('express');
 const mongoose = require('mongoose');
+const http = require('http');
 const cors = require('cors');
 
 const app = express();
+const server = http.createServer(app);
+const io = require('socket.io').listen(server);
+
 app.use(express.json());
 mongoose.connect('mongodb://zpwproject:zpwproject123@ds225382.mlab.com:25382/zpwproject', {useNewUrlParser: true});
 
@@ -48,41 +55,88 @@ app.options('/order/:id', cors());
 
 /** GET **/
 
-app.get('/products', cors(), (req, res) => products.find({}, (err, resp) => res.send(err ? '[]' : resp)));
-app.get('/product/:id', cors(), (req, res) => products.find({_id: req.params.id}, (err, resp) => res.send(err ? '[]' : resp[0])));
-app.get('/discounts', cors(), (req, res) => discounts.find({}, (err, resp) => res.send(err ? '[]' : resp)));
-app.get('/orders', cors(), (req, res) => orders.find({}, (err, resp) => res.send(err ? '[]' : resp)));
+app.get('/products', cors(), (req, res) => {
+  return products.find({}, (err, resp) => {
+    const toEmit = err ? '[]' : resp;
+    io.sockets.emit('products', toEmit);
+    return res.send(toEmit);
+  });
+});
+
+app.get('/product/:id', cors(), (req, res) => {
+  return products.find({_id: req.params.id}, (err, resp) => {
+    const toEmit = err ? '[]' : resp[0];
+    io.sockets.emit('product', toEmit);
+    return res.send(toEmit);
+  });
+});
+
+app.get('/discounts', cors(), (req, res) => {
+  return discounts.find({}, (err, resp) => {
+    const toEmit = err ? '[]' : resp;
+    io.sockets.emit('discounts', toEmit);
+    return res.send(toEmit);
+  });
+});
+
+app.get('/orders', cors(), (req, res) => {
+  return orders.find({}, (err, resp) => {
+    const toEmit = err ? '[]' : resp;
+    io.sockets.emit('orders', toEmit);
+    return res.send(toEmit);
+  });
+});
 
 /** POST **/
-app.post('/product', cors(), (req, res) => products.create(req.body, () => res.send('')));
-app.post('/discount', cors(), (req, res) => discounts.create(req.body, () => res.send('')));
-app.post('/order', cors(), (req, res) => orders.create(req.body, () => res.send('')));
+
+app.post('/product', cors(), (req, res) => products.create(req.body, () => {
+  http.get(serverDomain + ':' + serverPort + '/products');
+  return res.send('');
+}));
+
+app.post('/discount', cors(), (req, res) => discounts.create(req.body, () => {
+  http.get(serverDomain + ':' + serverPort + '/discounts');
+  return res.send('');
+}));
+
+app.post('/order', cors(), (req, res) => orders.create(req.body, () => {
+  http.get(serverDomain + ':' + serverPort + '/orders');
+  return res.send('');
+}));
 
 /** PATCH **/
 
 app.patch('/product/:id', cors(), (req, res) => {
   products.findById(req.params.id, (err, product) => {
     product.set(req.body);
-    product.save(() => res.send(''));
+    product.save(() => {
+      http.get(serverDomain + ':' + serverPort + '/products');
+      return res.send('');
+    });
   });
 });
 
 app.patch('/order/:id', cors(), (req, res) => {
   orders.findById(req.params.id, (err, order) => {
     order.set(req.body);
-    order.save(() => res.send(''));
+    order.save(() => {
+      http.get(serverDomain + ':' + serverPort + '/orders');
+      return res.send('');
+    });
   });
 });
 
 /** DELETE **/
 
 app.delete('/product/:id', cors(), (req, res) => {
-  products.findById(req.params.id, (err, product) => product.remove(() => res.send('')));
+  products.findById(req.params.id, (err, product) => product.remove(() => {
+    http.get(serverDomain + ':' + serverPort + '/products');
+    return res.send('');
+  }));
 });
 
 /** ****** **/
 
-const server = app.listen(5000, () => {
-  const port = server.address().port;
-  console.log("REST SERVICE - http://localhost:%s", port)
+server.listen(serverPort, () => {
+  console.log("REST SERVICE - %s:%s", serverDomain, serverPort);
 });

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Product} from './product/product';
+import * as io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +10,30 @@ import {Product} from './product/product';
 export class NodeRestService {
 
   private apiUrl = 'http://localhost:5000';
+  private socket;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.socket = io(this.apiUrl).connect();
+  }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl + '/products');
+    this.http.get<Product[]>(this.apiUrl + '/products').toPromise();
+    return new Observable<Product[]>(observer => this.socket.on('products', data => observer.next(data)));
   }
 
   getProduct(id: string): Observable<any> {
-    return this.http.get<Product>(this.apiUrl + '/product/' + id);
+    this.http.get<Product>(this.apiUrl + '/product/' + id).toPromise();
+    return new Observable<any>(observer => this.socket.on('product', data => observer.next(data)));
   }
 
   getDiscounts(): Observable<any> {
-    return this.http.get(this.apiUrl + '/discounts');
+    this.http.get(this.apiUrl + '/discounts').toPromise();
+    return new Observable<any>(observer => this.socket.on('discounts', data => observer.next(data)));
   }
 
   getOrders(): Observable<any> {
-    return this.http.get(this.apiUrl + '/orders');
+    this.http.get(this.apiUrl + '/orders').toPromise();
+    return new Observable<any>(observer => this.socket.on('orders', data => observer.next(data)));
   }
 
   saveProduct(product: any): Promise<any> {
