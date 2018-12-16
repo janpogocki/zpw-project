@@ -3,6 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ProductsProviderService} from '../../../../src/app/products-provider.service';
+import {NodeRestService} from '../../../../src/app/node-rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,22 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth,
               private router: Router,
               private db: AngularFirestore,
-              private productsProviderService: ProductsProviderService) {
+              private productsProviderService: ProductsProviderService,
+              private nodeRest: NodeRestService) {
     this.authState = null;
     this.userRole = null;
 
     this.afAuth.authState.subscribe((auth) => this.authState = auth);
+
+    this.getFirebaseStatusDocument()
+      .then((status) => {
+        this.productsProviderService.firebaseBackendActive = status;
+        this.firebaseDataLoaded = true;
+
+        if (!this.productsProviderService.firebaseBackendActive) {
+          this.nodeRest.connect();
+        }
+      });
   }
 
   get isUserAnonymousLoggedIn(): boolean {
@@ -76,6 +88,7 @@ export class AuthService {
   }
 
   changeBackend(): Promise<any> {
+    this.nodeRest.connect();
     const backendDb = this.db.collection('backend');
 
     return backendDb

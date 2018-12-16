@@ -30,7 +30,7 @@ export class NaglowekComponent {
     this.authService.changeBackend()
       .then(() => {
         this.router.navigateByUrl('/', {skipLocationChange: true})
-          .then(() => this.router.navigate(['NaglowekComponent']));
+          .then(() => this.router.navigate(['/']));
         CartUtils.showSnackbar(this.snackbar, 'Zmieniono backend');
       });
   }
