@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product} from './product/product';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 import {CartUtils} from './utils/cart-utils';
@@ -12,9 +12,21 @@ import {NodeRestService} from './node-rest.service';
 export class ProductsProviderService {
 
   public firebaseBackendActive: boolean;
+  public firebaseDataLoaded = false;
+  public firebaseDataLoaded$ = new BehaviorSubject(this.firebaseDataLoaded);
 
   constructor(private db: AngularFirestore,
               private nodeRest: NodeRestService) {
+    this.getFirebaseStatusDocument()
+      .then(response => {
+        this.firebaseBackendActive = response;
+
+        if (!this.firebaseBackendActive) {
+          nodeRest.connect();
+        }
+
+        this.firebaseDataLoaded$.next(true);
+      });
   }
 
   getFirebaseStatusDocument(): Promise<boolean> {

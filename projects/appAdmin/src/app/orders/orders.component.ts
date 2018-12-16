@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ProductsProviderService} from '../../../../../src/app/products-provider.service';
 import {Product} from '../../../../../src/app/product/product';
+import {NodeRestService} from '../../../../../src/app/node-rest.service';
 
 @Component({
   selector: 'app-orders',
@@ -20,7 +21,8 @@ export class OrdersComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private db: AngularFirestore,
-              private productsProvider: ProductsProviderService) {
+              private productsProvider: ProductsProviderService,
+              private nodeRest: NodeRestService) {
     if (!authService.isUserEmailLoggedIn) {
       this.router.navigate(['/login']);
     }
@@ -32,6 +34,10 @@ export class OrdersComponent implements OnInit {
         .then((status) => {
           this.productsProvider.firebaseBackendActive = status;
           this.authService.firebaseDataLoaded = true;
+
+          if (!this.productsProvider.firebaseBackendActive) {
+            this.nodeRest.connect();
+          }
 
           this.getData();
         });

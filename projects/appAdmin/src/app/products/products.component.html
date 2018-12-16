@@ -7,21 +7,23 @@
 </div>
 
 <mat-card class="card-new-promotion" *ngIf="showPromotionBox">
-  <mat-form-field class="product-input">
-    <input matInput placeholder="Czas trwania promocji" type="time" value="00:30" required #discountEndTime>
-  </mat-form-field>
+  <form (ngSubmit)="saveDiscount(discountEndTime.value, productPercentValue.value)" ngNativeValidate>
+    <mat-form-field class="product-input">
+      <input matInput placeholder="Czas trwania promocji" type="time" value="00:30" required #discountEndTime>
+    </mat-form-field>
 
-  <mat-form-field class="product-input" style="width: 10% !important;">
-    <span matPrefix>- &nbsp;</span>
-    <input matInput placeholder="Obniżka" type="number" min="1" max="100" required #productPercentValue>
-    <span matSuffix>&nbsp;%</span>
-  </mat-form-field>
+    <mat-form-field class="product-input" style="width: 10% !important;">
+      <span matPrefix>- &nbsp;</span>
+      <input matInput placeholder="Obniżka" type="number" min="1" max="100" required #productPercentValue>
+      <span matSuffix>&nbsp;%</span>
+    </mat-form-field>
 
-  <div class="buttons-div">
-    <button mat-button color="primary" (click)="showPromotionBox = false;">ANULUJ</button>
-    &nbsp;
-    <button mat-raised-button color="primary" (click)="saveDiscount(discountEndTime.value, productPercentValue.value)">ZAPISZ</button>
-  </div>
+    <div class="buttons-div">
+      <button mat-button color="primary" (click)="showPromotionBox = false;">ANULUJ</button>
+      &nbsp;
+      <button mat-raised-button color="primary" type="submit">ZAPISZ</button>
+    </div>
+  </form>
 </mat-card>
 
 <mat-card>

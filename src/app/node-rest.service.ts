@@ -13,6 +13,9 @@ export class NodeRestService {
   private socket;
 
   constructor(private http: HttpClient) {
+  }
+
+  connect() {
     this.socket = io(this.apiUrl).connect();
   }
 

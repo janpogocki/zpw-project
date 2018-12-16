@@ -1,29 +1,31 @@
-<mat-card>
-  <mat-form-field class="product-input">
-    <input matInput name="name" placeholder="Nazwa produktu" value="{{product.name}}" required #name>
-  </mat-form-field>
+<form (ngSubmit)="saveProduct(name.value, quantity.value, price.value, description.value, photo.value, category.value)" ngNativeValidate>
+  <mat-card>
+    <mat-form-field class="product-input">
+      <input matInput name="name" placeholder="Nazwa produktu" value="{{product.name}}" required #name>
+    </mat-form-field>
 
-  <mat-form-field class="product-input">
-    <input matInput name="quantity" placeholder="Ilość" type="number" min="1" value="{{product.quantity}}" required #quantity>
-  </mat-form-field>
+    <mat-form-field class="product-input">
+      <input matInput name="quantity" placeholder="Ilość" type="number" min="1" value="{{product.quantity}}" required #quantity>
+    </mat-form-field>
 
-  <mat-form-field class="product-input">
-    <input matInput name="price" placeholder="Cena" type="number" value="{{product.price.toFixed(2)}}" required #price>
-  </mat-form-field>
+    <mat-form-field class="product-input">
+      <input matInput name="price" placeholder="Cena" type="number" value="{{product.price.toFixed(2)}}" required #price>
+    </mat-form-field>
 
-  <mat-form-field class="product-input">
-    <input matInput name="description" placeholder="Opis produktu" value="{{product.description}}" required #description>
-  </mat-form-field>
+    <mat-form-field class="product-input">
+      <input matInput name="description" placeholder="Opis produktu" value="{{product.description}}" required #description>
+    </mat-form-field>
 
-  <mat-form-field class="product-input">
-    <input matInput name="photo" placeholder="Adres URL zdjęcia produktu" type="url" value="{{product.photo}}" required #photo>
-  </mat-form-field>
+    <mat-form-field class="product-input">
+      <input matInput name="photo" placeholder="Adres URL zdjęcia produktu" type="url" value="{{product.photo}}" required #photo>
+    </mat-form-field>
 
-  <mat-form-field class="product-input">
-    <input matInput name="category" placeholder="Kategoria produktu" value="{{product.category}}" required #category>
-  </mat-form-field>
-</mat-card>
+    <mat-form-field class="product-input">
+      <input matInput name="category" placeholder="Kategoria produktu" value="{{product.category}}" required #category>
+    </mat-form-field>
+  </mat-card>
 
-<div class="buttons-div">
-  <button mat-raised-button color="primary" (click)="saveProduct(name.value, quantity.value, price.value, description.value, photo.value, category.value)">ZAPISZ</button>
-</div>
+  <div class="buttons-div">
+    <button mat-raised-button color="primary" type="submit">ZAPISZ</button>
+  </div>
+</form>

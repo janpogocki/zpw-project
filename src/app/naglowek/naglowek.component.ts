@@ -16,16 +16,17 @@ export class NaglowekComponent {
 
   constructor(private cartService: CartService,
               private productsProvider: ProductsProviderService) {
-    productsProvider.getFirebaseStatusDocument()
-      .then(response => {
-        productsProvider.firebaseBackendActive = response;
-        this.firebaseDataLoaded = true;
+    productsProvider.firebaseDataLoaded$
+      .subscribe(response => {
+        this.firebaseDataLoaded = response;
 
-        cartService.productsInCartChanged$
-          .subscribe(value => {
-            this.items = CartUtils.getSumOfProducts(value);
-            this.price = CartUtils.getAmountOfProducts(value);
-          });
+        if (response) {
+          cartService.productsInCartChanged$
+            .subscribe(value => {
+              this.items = CartUtils.getSumOfProducts(value);
+              this.price = CartUtils.getAmountOfProducts(value);
+            });
+        }
       });
   }
 

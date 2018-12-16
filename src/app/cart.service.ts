@@ -15,11 +15,20 @@ export class CartService {
   productsInCartChanged$ = new BehaviorSubject(this.productsInCart);
 
   constructor(private productsProvider: ProductsProviderService) {
-    const productsInLocalStorage = localStorage.getItem('productsInChart');
-    if (productsInLocalStorage !== null) {
-      this.productsInCart = JSON.parse(productsInLocalStorage);
-    }
+    productsProvider.firebaseDataLoaded$
+      .subscribe(response => {
+        if (response) {
+          const productsInLocalStorage = localStorage.getItem('productsInChart');
+          if (productsInLocalStorage !== null) {
+            this.productsInCart = JSON.parse(productsInLocalStorage);
+          }
 
+          this.getProducts();
+        }
+      });
+  }
+
+  getProducts() {
     this.productsProvider.getProducts()
       .subscribe((products: Product[]) => {
         this.products = products;

@@ -15,7 +15,7 @@ export class NaglowekComponent {
   constructor(public authService: AuthService,
               private router: Router,
               private snackbar: MatSnackBar,
-              private productsService: ProductsProviderService) {
+              public productsService: ProductsProviderService) {
   }
 
   logout() {

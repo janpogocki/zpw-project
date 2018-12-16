@@ -2,7 +2,7 @@
 Aby Twoje zamówienie było zrealizowane, wypełnij poprawnie poniższy formularz. <i>Wszystkie pola są wymagane.</i>
 
 <div class="breakfiller"></div>
-<form onsubmit="return false; ">
+<form (ngSubmit)="sendForm()" ngNativeValidate>
   <mat-card>
 
     <div class="finalize-form">
@@ -25,11 +25,11 @@ Aby Twoje zamówienie było zrealizowane, wypełnij poprawnie poniższy formular
 
   <div class="buttons-div">
 
-    <button mat-button routerLink="/" color="primary">POWRÓT DO SKLEPU</button>
+    <button mat-button routerLink="/" type="button" color="primary">POWRÓT DO SKLEPU</button>
 
     <div class="breakfiller2"></div>
 
-    <button mat-raised-button color="primary" (click)="sendForm()">ZŁÓŻ ZAMÓWIENIE</button>
+    <button mat-raised-button type="submit" color="primary">ZŁÓŻ ZAMÓWIENIE</button>
 
   </div>
 </form>

@@ -3,6 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ProductsProviderService} from '../../../../src/app/products-provider.service';
+import {NodeRestService} from '../../../../src/app/node-rest.service';
 
 @Injectable({
   providedIn: 'root'
