@@ -3,7 +3,6 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ProductsProviderService} from '../../../../src/app/products-provider.service';
-import {NodeRestService} from '../../../../src/app/node-rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,33 +29,12 @@ export class AuthService {
     return (this.authState !== null) ? this.authState.isAnonymous : false;
   }
 
-  get currentUserId(): string {
-    return (this.authState !== null) ? this.authState.uid : '';
-  }
-
-  get currentUserName(): string {
-    return this.authState['email'];
-  }
-
-  get currentUser(): any {
-    return (this.authState !== null) ? this.authState : null;
-  }
-
   get isUserEmailLoggedIn(): boolean {
     return (this.authState !== null) && (!this.isUserAnonymousLoggedIn);
   }
 
   getUserRole(): number {
     return this.userRole;
-  }
-
-  signUpWithEmail(email: string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => this.authState = user)
-      .catch(error => {
-        console.log(error);
-        throw error;
-      });
   }
 
   loginWithEmail(email: string, password: string) {
